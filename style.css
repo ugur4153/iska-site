@@ -113,8 +113,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .header__inner { display: flex; align-items: center; gap: 32px; }
 
 .brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-.brand__k { height: 50px; width: auto; transition: height .3s var(--ease); }
-.header.is-scrolled .brand__k { height: 42px; }
+.brand__k { height: 56px; width: auto; transition: height .3s var(--ease); }
+.header.is-scrolled .brand__k { height: 46px; }
 .brand__text { display: flex; flex-direction: column; align-items: stretch; line-height: 1; }
 .brand__name { display: block; text-align: center; font-size: 1.6rem; font-weight: 500; letter-spacing: .42em; padding-left: .42em; color: var(--forest); }
 .brand__sub { display: flex; align-items: center; gap: 6px; font-size: .56rem; font-weight: 600; letter-spacing: .26em; color: var(--leaf); margin-top: 7px; white-space: nowrap; }
@@ -272,7 +272,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .footer { background: var(--forest); color: rgba(255,255,255,.72); padding: clamp(64px, 8vw, 96px) 0 0; font-size: .95rem; }
 .footer__grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr; gap: 48px; padding-bottom: 56px; }
 .footer__logo { display: inline-block; background: var(--cream); border-radius: var(--radius); padding: 14px 22px; }
-.footer__logo img { height: 84px; width: auto; }
+.footer__logo img { height: 110px; width: auto; }
 .footer__about { margin-top: 22px; max-width: 340px; line-height: 1.7; }
 .footer h4 { color: var(--white); font-size: .8rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; margin-bottom: 20px; }
 .footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
