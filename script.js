@@ -101,23 +101,46 @@
     // Spam koruması: honeypot dolu veya form 3 sn'den kısa sürede gönderildiyse yok say
     if (form.elements.website.value || Date.now() - formStart < 3000) return;
 
-    // Form, bilgileri hazır bir WhatsApp mesajına dönüştürür (sunucu gerektirmez)
+    // Talep e-posta ile info@iskaproperty.com adresine gider (FormSubmit, ücretsiz)
     const v = (n) => (form.elements[n] && form.elements[n].value || "").trim();
     const lines = [
       "Merhaba, ISKA web sitesinden yazıyorum.",
       "Ad Soyad: " + v("name"),
       "Telefon: " + v("phone"),
-      "E-posta: " + v("email"),
     ];
     if (v("project")) lines.push("İlgilendiğim proje: " + v("project"));
-    if (v("budget")) lines.push("Bütçe: " + v("budget"));
     if (v("message")) lines.push("Mesaj: " + v("message"));
-    const url = "https://wa.me/905452154246?text=" + encodeURIComponent(lines.join("\n"));
-    const w = window.open(url, "_blank", "noopener");
-    if (!w) window.location.href = url;
-    form.classList.add("is-sent");
-    if (window.gtag) window.gtag("event", "generate_lead");
-    if (window.fbq) window.fbq("track", "Lead");
+    const wa = document.getElementById("formWa");
+    if (wa) wa.href = "https://wa.me/905452154246?text=" + encodeURIComponent(lines.join("\n"));
+
+    const btn = form.querySelector('button[type="submit"]');
+    form.classList.remove("is-error");
+    if (btn) { btn.disabled = true; btn.dataset.label = btn.innerHTML; btn.textContent = "Gönderiliyor…"; }
+    fetch("https://formsubmit.co/ajax/info@iskaproperty.com", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        _subject: "ISKA sitesinden yeni bilgi talebi: " + v("name"),
+        _template: "table",
+        _captcha: "false",
+        _replyto: v("email"),
+        "Ad Soyad": v("name"),
+        "Telefon": v("phone"),
+        "E-posta": v("email"),
+        "İlgilenilen Proje": v("project") || "-",
+        "Bütçe": v("budget") || "-",
+        "Mesaj": v("message") || "-",
+        "Sayfa": location.href
+      })
+    })
+      .then((r) => r.json().then((j) => { if (!r.ok || String(j.success) === "false") throw new Error(j.message || r.status); }))
+      .then(() => {
+        form.classList.add("is-sent");
+        if (window.gtag) window.gtag("event", "generate_lead");
+        if (window.fbq) window.fbq("track", "Lead");
+      })
+      .catch(() => form.classList.add("is-error"))
+      .finally(() => { if (btn) { btn.disabled = false; btn.innerHTML = btn.dataset.label; } });
   });
 
   }
