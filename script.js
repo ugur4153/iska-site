@@ -116,14 +116,14 @@
     const btn = form.querySelector('button[type="submit"]');
     form.classList.remove("is-error");
     if (btn) { btn.disabled = true; btn.dataset.label = btn.innerHTML; btn.textContent = "Gönderiliyor…"; }
-    fetch("https://formsubmit.co/ajax/info@iskaproperty.com", {
+    fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify({
-        _subject: "ISKA sitesinden yeni bilgi talebi: " + v("name"),
-        _template: "table",
-        _captcha: "false",
-        _replyto: v("email"),
+        access_key: "dba763f2-ce5d-417f-bb15-74c2dfd9a9f5",
+        subject: "ISKA sitesinden yeni bilgi talebi: " + v("name"),
+        from_name: "ISKA Web Sitesi",
+        replyto: v("email"),
         "Ad Soyad": v("name"),
         "Telefon": v("phone"),
         "E-posta": v("email"),
