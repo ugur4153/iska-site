@@ -541,3 +541,4 @@ button, input, select, textarea { font: inherit; color: inherit; }
   .post-cta__actions, .post-cta__actions .btn { width: 100%; }
 }
 .form__success a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.form__error a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }

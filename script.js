@@ -110,8 +110,8 @@
     ];
     if (v("project")) lines.push("İlgilendiğim proje: " + v("project"));
     if (v("message")) lines.push("Mesaj: " + v("message"));
-    const wa = document.getElementById("formWa");
-    if (wa) wa.href = "https://wa.me/905452154246?text=" + encodeURIComponent(lines.join("\n"));
+    const waUrl = "https://wa.me/905452154246?text=" + encodeURIComponent(lines.join("\n"));
+    document.querySelectorAll(".js-form-wa").forEach((a) => { a.href = waUrl; });
 
     const btn = form.querySelector('button[type="submit"]');
     form.classList.remove("is-error");
