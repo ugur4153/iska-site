@@ -101,17 +101,23 @@
     // Spam koruması: honeypot dolu veya form 3 sn'den kısa sürede gönderildiyse yok say
     if (form.elements.website.value || Date.now() - formStart < 3000) return;
 
-    // Netlify Forms: gelen mesajlar Netlify panelinde "Forms" bölümünde listelenir ve e-postaya iletilir
-    form.classList.remove("is-error");
-    const data = new URLSearchParams(new FormData(form));
-    fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: data.toString() })
-      .then((r) => {
-        if (!r.ok) throw new Error(r.status);
-        form.classList.add("is-sent");
-        if (window.gtag) window.gtag("event", "generate_lead");
-        if (window.fbq) window.fbq("track", "Lead");
-      })
-      .catch(() => form.classList.add("is-error"));
+    // Form, bilgileri hazır bir WhatsApp mesajına dönüştürür (sunucu gerektirmez)
+    const v = (n) => (form.elements[n] && form.elements[n].value || "").trim();
+    const lines = [
+      "Merhaba, ISKA web sitesinden yazıyorum.",
+      "Ad Soyad: " + v("name"),
+      "Telefon: " + v("phone"),
+      "E-posta: " + v("email"),
+    ];
+    if (v("project")) lines.push("İlgilendiğim proje: " + v("project"));
+    if (v("budget")) lines.push("Bütçe: " + v("budget"));
+    if (v("message")) lines.push("Mesaj: " + v("message"));
+    const url = "https://wa.me/905452154246?text=" + encodeURIComponent(lines.join("\n"));
+    const w = window.open(url, "_blank", "noopener");
+    if (!w) window.location.href = url;
+    form.classList.add("is-sent");
+    if (window.gtag) window.gtag("event", "generate_lead");
+    if (window.fbq) window.fbq("track", "Lead");
   });
 
   }
