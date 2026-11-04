@@ -261,7 +261,7 @@
 /* Ana sayfa: parsellerde beliren yeşil tikler */
 (function () {
   const layer = document.querySelector(".hero__ticks");
-  if (!layer || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!layer) return;
   const svg = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></svg>';
   let last = [];
   function spot() {

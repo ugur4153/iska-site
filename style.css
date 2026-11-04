@@ -152,7 +152,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 @keyframes heroDrift { from { transform: translate(-2.5%, 2%); } to { transform: translate(2.5%, -2%); } }
 @keyframes tickPop { 0% { opacity: 0; transform: scale(.4); } 14% { opacity: .95; transform: scale(1.08); } 22% { transform: scale(1); } 78% { opacity: .95; transform: scale(1); } 100% { opacity: 0; transform: scale(.85); } }
 @keyframes tickDraw { to { stroke-dashoffset: 0; } }
-@media (prefers-reduced-motion: reduce) { .hero__ticks { display: none; } }
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: 1;
   background:
@@ -550,3 +549,5 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .form__success a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 .form__error a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) { .hero__bg, .hero__ticks { animation: heroDrift 36s ease-in-out infinite alternate !important; } .hero__tick { animation: tickPop 3.6s ease forwards !important; } .hero__tick svg { animation: tickDraw .5s .25s ease-out forwards !important; } }
