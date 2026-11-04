@@ -144,7 +144,15 @@ button, input, select, textarea { font: inherit; color: inherit; }
   display: flex; align-items: center; color: var(--forest); overflow: hidden; background: var(--cream);
   padding: 140px 0 120px;
 }
-.hero__bg { position: absolute; inset: 0; background: url("assets/hero-light.svg") center / cover no-repeat; transform: scale(1.08); animation: heroZoom 18s var(--ease) forwards; }
+.hero__bg, .hero__ticks { position: absolute; inset: -5%; animation: heroDrift 36s ease-in-out infinite alternate; will-change: transform; }
+.hero__bg { background: url("assets/hero-light.svg") center / cover no-repeat; }
+.hero__ticks { z-index: 1; pointer-events: none; }
+.hero__tick { position: absolute; width: 26px; height: 26px; margin: -13px 0 0 -13px; border-radius: 50%; background: var(--leaf, #286818); box-shadow: 0 0 0 5px rgba(40,104,24,.16), 0 4px 10px rgba(25,57,28,.18); display: grid; place-items: center; opacity: 0; transform: scale(.4); animation: tickPop 3.6s var(--ease) forwards; }
+.hero__tick svg { width: 14px; height: 14px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 24; stroke-dashoffset: 24; animation: tickDraw .5s .25s ease-out forwards; }
+@keyframes heroDrift { from { transform: translate(-2.5%, 2%); } to { transform: translate(2.5%, -2%); } }
+@keyframes tickPop { 0% { opacity: 0; transform: scale(.4); } 14% { opacity: .95; transform: scale(1.08); } 22% { transform: scale(1); } 78% { opacity: .95; transform: scale(1); } 100% { opacity: 0; transform: scale(.85); } }
+@keyframes tickDraw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .hero__ticks { display: none; } }
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: 1;
   background:

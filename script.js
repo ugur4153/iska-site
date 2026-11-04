@@ -257,3 +257,31 @@
   panel.querySelector(".ai-close").addEventListener("click", () => { setOpen(false); fab.focus(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && panel.classList.contains("is-open")) setOpen(false); });
 })();
+
+/* Ana sayfa: parsellerde beliren yeşil tikler */
+(function () {
+  const layer = document.querySelector(".hero__ticks");
+  if (!layer || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const svg = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7"/></svg>';
+  let last = [];
+  function spot() {
+    const m = innerWidth < 760;
+    for (let i = 0; i < 8; i++) {
+      const x = m ? 8 + Math.random() * 62 : 60 + Math.random() * 34;
+      const y = m ? 84 + Math.random() * 10 : 16 + Math.random() * 72;
+      if (last.every((p) => Math.hypot(p[0] - x, p[1] - y) > 14)) return [x, y];
+    }
+    return null;
+  }
+  function add() {
+    if (document.hidden || layer.childElementCount >= 3) return;
+    const p = spot(); if (!p) return;
+    last = [p].concat(last).slice(0, 4);
+    const t = document.createElement("span");
+    t.className = "hero__tick"; t.innerHTML = svg;
+    t.style.left = p[0] + "%"; t.style.top = p[1] + "%";
+    layer.appendChild(t);
+    t.addEventListener("animationend", (e) => { if (e.animationName === "tickPop") t.remove(); });
+  }
+  setTimeout(function loop() { add(); setTimeout(loop, 1800 + Math.random() * 1600); }, 1500);
+})();
